@@ -2,7 +2,7 @@ import { connectMongoDB } from "@/lib/mongodb";
 import User from "@/models/User";
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import bcrypt from "bcryptjs/dist/bcrypt";
+import bcryptjs from "bcryptjs";
 
 export const authOptions = {
   providers: [
@@ -21,7 +21,10 @@ export const authOptions = {
             return null;
           }
 
-          const passwordsMathch = await bcrypt.compare(password, user.password);
+          const passwordsMathch = await bcryptjs.compare(
+            password,
+            user.password
+          );
 
           if (!passwordsMathch) {
             return null;
